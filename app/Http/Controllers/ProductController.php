@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Kreait\Firebase\Factory;
 class ProductController extends Controller
 {
     /**
@@ -28,27 +27,6 @@ class ProductController extends Controller
     {
         // إنشاء المنتج في قاعدة البيانات
         $product = Product::create($request->all());
-
-        // إعداد الاتصال بـ Firebase
-        $firebase = (new \Kreait\Firebase\Factory())
-            ->withServiceAccount('C:/Users/Administrator/Desktop/pwa_and_firebase_cm/ex/config/test-6faeb-firebase-adminsdk-i2a5t-d44a0db58c.json');
-
-
-        // الحصول على خدمة الإشعارات
-        $messaging = $firebase->createMessaging();
-
-        // إعداد الإشعار
-        $message = [
-            'notification' => [
-                'title' => 'منتج جديد!',
-                'body' => 'تمت إضافة المنتج: ' . $product->name,
-            ],
-            'topic' => 'products', // الموضوع الذي سنرسل الإشعار له
-        ];
-
-        // إرسال الإشعار
-        $messaging->send($message);
-
         return response()->json($product, 201);
     }
 
