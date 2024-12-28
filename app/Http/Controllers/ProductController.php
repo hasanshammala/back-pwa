@@ -78,3 +78,6 @@ class ProductController extends Controller
         return response()->json(null, 204);
     }
 }
+
+
+NIXPACKS_BUILD_CMD=
